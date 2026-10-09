@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
 <meta name="description" content="道の気配MAP｜東広島市（仮称）— 交通事故データと道路交通センサスを用いた内部解析・共同検討ツール Analysis">
-<title>道の気配MAP｜東広島市（仮称） Analysis v0.6.31</title>
+<title>道の気配MAP｜東広島市（仮称） Analysis v0.6.31-r5 UI操作試作</title>
 <style>
 :root{--bg:#f5f7fa;--panel:#fff;--text:#1f2937;--muted:#667085;--line:#d0d5dd;--blue:#175cd3}
 *{box-sizing:border-box}
@@ -57,6 +57,53 @@ button{cursor:pointer;font-weight:700}.primary{background:var(--blue);color:whit
 .pc{position:absolute;inset:0;display:grid;place-items:center;z-index:2;font-size:13px;font-weight:800}.legend{font-size:12px;line-height:1.55}
 .note{font-size:11px;color:var(--muted);line-height:1.5}.warn{font-size:11px;line-height:1.5;background:#fffaeb;border:1px solid #fedf89;border-radius:8px;padding:8px;margin-top:12px}
 hr{border:0;border-top:1px solid #e5e7eb;margin:14px 0}.key{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;margin-top:8px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}
+
+.protoFontControl{
+  margin:7px 0 10px;padding:7px 8px;border:1px solid #d0d5dd;border-radius:8px;background:#f8fafc
+}
+.protoFontControlTop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.protoFontLabel{font-size:9.5px;font-weight:900;color:#344054}
+.protoFontBtns{display:flex;align-items:center;gap:4px}
+.protoFontBtns button{
+  width:28px!important;height:25px!important;margin:0!important;padding:0!important;
+  font-size:14px!important;font-weight:900!important;border-radius:6px!important
+}
+.protoFontValue{min-width:38px;text-align:center;font-size:9px;font-weight:800;color:#475467}
+.protoFontHint{margin-top:4px;font-size:8.3px;line-height:1.4;color:#667085}
+#side.uiProto{--ui-font-scale:1}
+#side.uiProto .protoCategoryTitle{font-size:calc(12px * var(--ui-font-scale))}
+#side.uiProto .protoCategorySub{font-size:calc(8.8px * var(--ui-font-scale))}
+#side.uiProto .protoSubhead b{font-size:calc(10px * var(--ui-font-scale))}
+#side.uiProto .protoInlineHelp,#side.uiProto .protoHelpBtn,#side.uiProto .protoCollapseBtn{font-size:calc(8.8px * var(--ui-font-scale))!important}
+#side.uiProto .layerGroupTitle,#side.uiProto label,#side.uiProto button,#side.uiProto select,#side.uiProto input,#side.uiProto textarea,
+#side.uiProto .controlHint,#side.uiProto .muted,#side.uiProto .small,#side.uiProto .protoSaveNote,
+#side.uiProto .protoStatusTitle,#side.uiProto .protoStatusMeta,#side.uiProto .protoFooterNote{
+  font-size:calc(10px * var(--ui-font-scale))!important;
+}
+#side.uiProto .viewerIntro{font-size:calc(9.5px * var(--ui-font-scale))!important;line-height:1.5}
+
+
+#protoRefWindow{--ref-font-scale:1}
+.protoRefTools{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:6px 10px;border-bottom:1px solid #e4e7ec;background:#f8fafc
+}
+.protoRefToolsLabel{font-size:9px;font-weight:900;color:#344054}
+.protoRefFontBtns{display:flex;align-items:center;gap:4px}
+.protoRefFontBtns button{
+  width:28px!important;height:24px!important;margin:0!important;padding:0!important;
+  border-radius:6px!important;font-size:14px!important;font-weight:900!important
+}
+.protoRefFontValue{
+  min-width:38px;text-align:center;font-size:9px;font-weight:800;color:#475467
+}
+#protoRefWindow .protoRefTitle{font-size:calc(11.5px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody{font-size:calc(11px * var(--ref-font-scale));line-height:1.65}
+#protoRefWindow .protoRefBody h3{font-size:calc(12px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody h4{font-size:calc(10.5px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody .auditBody{font-size:calc(10.5px * var(--ref-font-scale))!important}
+#protoRefWindow .protoRefFooter{font-size:calc(8.7px * var(--ref-font-scale))}
+
 @media(max-width:760px){#app{grid-template-columns:1fr;grid-template-rows:auto 1fr}#side{max-height:43vh;border-right:0;border-bottom:1px solid var(--line)}}
 
 .opacityRow{display:grid;grid-template-columns:1fr 58px;gap:8px;align-items:center;margin-top:6px}
@@ -184,6 +231,53 @@ header{height:72px;padding:8px 14px;background:#111827}
 /* Viewerでは解析・選定用UIを表示しない。搭載データ自体は公開情報のみ。 */
 .areaBox,.viewerAnalystOnly{display:block!important}
 #download{display:block!important}
+
+.protoFontControl{
+  margin:7px 0 10px;padding:7px 8px;border:1px solid #d0d5dd;border-radius:8px;background:#f8fafc
+}
+.protoFontControlTop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.protoFontLabel{font-size:9.5px;font-weight:900;color:#344054}
+.protoFontBtns{display:flex;align-items:center;gap:4px}
+.protoFontBtns button{
+  width:28px!important;height:25px!important;margin:0!important;padding:0!important;
+  font-size:14px!important;font-weight:900!important;border-radius:6px!important
+}
+.protoFontValue{min-width:38px;text-align:center;font-size:9px;font-weight:800;color:#475467}
+.protoFontHint{margin-top:4px;font-size:8.3px;line-height:1.4;color:#667085}
+#side.uiProto{--ui-font-scale:1}
+#side.uiProto .protoCategoryTitle{font-size:calc(12px * var(--ui-font-scale))}
+#side.uiProto .protoCategorySub{font-size:calc(8.8px * var(--ui-font-scale))}
+#side.uiProto .protoSubhead b{font-size:calc(10px * var(--ui-font-scale))}
+#side.uiProto .protoInlineHelp,#side.uiProto .protoHelpBtn,#side.uiProto .protoCollapseBtn{font-size:calc(8.8px * var(--ui-font-scale))!important}
+#side.uiProto .layerGroupTitle,#side.uiProto label,#side.uiProto button,#side.uiProto select,#side.uiProto input,#side.uiProto textarea,
+#side.uiProto .controlHint,#side.uiProto .muted,#side.uiProto .small,#side.uiProto .protoSaveNote,
+#side.uiProto .protoStatusTitle,#side.uiProto .protoStatusMeta,#side.uiProto .protoFooterNote{
+  font-size:calc(10px * var(--ui-font-scale))!important;
+}
+#side.uiProto .viewerIntro{font-size:calc(9.5px * var(--ui-font-scale))!important;line-height:1.5}
+
+
+#protoRefWindow{--ref-font-scale:1}
+.protoRefTools{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:6px 10px;border-bottom:1px solid #e4e7ec;background:#f8fafc
+}
+.protoRefToolsLabel{font-size:9px;font-weight:900;color:#344054}
+.protoRefFontBtns{display:flex;align-items:center;gap:4px}
+.protoRefFontBtns button{
+  width:28px!important;height:24px!important;margin:0!important;padding:0!important;
+  border-radius:6px!important;font-size:14px!important;font-weight:900!important
+}
+.protoRefFontValue{
+  min-width:38px;text-align:center;font-size:9px;font-weight:800;color:#475467
+}
+#protoRefWindow .protoRefTitle{font-size:calc(11.5px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody{font-size:calc(11px * var(--ref-font-scale));line-height:1.65}
+#protoRefWindow .protoRefBody h3{font-size:calc(12px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody h4{font-size:calc(10.5px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody .auditBody{font-size:calc(10.5px * var(--ref-font-scale))!important}
+#protoRefWindow .protoRefFooter{font-size:calc(8.7px * var(--ref-font-scale))}
+
 @media(max-width:760px){
   header{height:78px}
   #app{height:calc(100vh - 78px)}
@@ -412,6 +506,175 @@ header{height:72px;padding:8px 14px;background:#111827}
 .analysisSessionStatus{min-height:14px;margin-top:5px;color:#475467;font-size:9px;line-height:1.4}
 .analysisSourceBadge{display:inline-block;padding:2px 6px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-size:8.5px;font-weight:800}
 
+
+/* ===== Analysis v0.6.31-r2 UI prototype ===== */
+#side.uiProto{padding:10px 10px 18px}
+#side.uiProto>.sectionHead{display:none!important}
+#side.uiProto #viewerRangeBox{display:none!important}
+#side.uiProto #areaRectBtn,#side.uiProto #areaEllipseBtn{display:none!important}
+#side.uiProto .areaShapeRow{grid-template-columns:1fr}
+#side.uiProto #areaPolygonBtn{font-size:10.5px;padding:8px 7px}
+#side.uiProto #areaExportBtn,#side.uiProto #areaImportBtn,#side.uiProto #areaImportInput{display:none!important}
+#side.uiProto .viewerOnlyNote{display:none!important}
+#side.uiProto>hr{display:none}
+#side.uiProto>.qualityNote,#side.uiProto>.warn{display:none!important}
+#side.uiProto>details.auditBox{display:none!important}
+
+.protoCategory{
+  margin:10px 0;border:1px solid #d0d5dd;border-radius:10px;background:#fff;
+  box-shadow:0 1px 2px rgba(16,24,40,.04);overflow:hidden
+}
+.protoCategoryHeader{
+  display:flex;align-items:center;justify-content:space-between;gap:7px;
+  padding:8px 9px;background:#f8fafc;border-bottom:1px solid #e4e7ec
+}
+.protoCategoryHeaderLeft{min-width:0}
+.protoCategoryTitle{font-size:12px;font-weight:900;color:#1d2939}
+.protoCategorySub{font-size:8.8px;line-height:1.35;color:#667085;margin-top:1px}
+.protoCategoryActions{display:flex;align-items:center;gap:4px;flex:0 0 auto}
+.protoHelpBtn,.protoCollapseBtn{
+  width:auto!important;margin:0!important;padding:3px 6px!important;border-radius:999px!important;
+  font-size:8.8px!important;font-weight:800!important;line-height:1.2!important;
+  background:#fff!important;color:#0f5f68!important;border:1px solid #b7d9d5!important
+}
+.protoCollapseBtn{color:#475467!important;border-color:#d0d5dd!important}
+.protoCategoryBody{padding:8px 9px 10px}
+.protoCategory.collapsed .protoCategoryBody{display:none}
+.protoCategory.collapsed .protoCategoryHeader{border-bottom:0}
+.protoSubhead{
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+  margin:10px 0 5px;padding-top:8px;border-top:1px solid #eef2f6
+}
+.protoSubhead:first-child{margin-top:0;padding-top:0;border-top:0}
+.protoSubhead b{font-size:10px;color:#344054}
+.protoInlineHelp{
+  width:auto!important;margin:0!important;padding:2px 6px!important;border-radius:999px!important;
+  font-size:8.3px!important;font-weight:800!important;background:#fff!important;
+  color:#6941c6!important;border:1px solid #d6bbfb!important
+}
+.protoCategory .layerBox,.protoCategory .areaBox,.protoCategory .accidentIdSearch,
+.protoCategory .selectionResultGroup,.protoCategory .mapOpacityGroup,
+.protoCategory .yearFilterBlock,.protoCategory .analysisSession{
+  margin-top:7px
+}
+.protoCategory .analysisSession{margin-bottom:0}
+.protoCompactStatus{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:8px;border:1px solid #b7c7c1;border-radius:8px;background:#f7fbf9
+}
+.protoStatusMain{min-width:0}
+.protoStatusTitle{font-size:10.5px;font-weight:900;color:#173132}
+.protoStatusMeta{font-size:8.8px;color:#475467;line-height:1.45;margin-top:2px}
+.protoStatusDot{
+  display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;
+  margin-right:5px;vertical-align:-1px
+}
+.protoEvidenceBtn{
+  width:auto!important;margin:0!important;padding:5px 7px!important;border-radius:6px!important;
+  font-size:9px!important;font-weight:800!important;background:#173132!important;color:#fff!important;
+  border:1px solid #173132!important;white-space:nowrap
+}
+.protoSaveNote{
+  margin:6px 0;padding:6px 7px;border-radius:7px;background:#f5f3ff;border:1px solid #ddd6fe;
+  color:#5b21b6;font-size:9px;line-height:1.5
+}
+.protoCsvWrap{margin-top:8px}
+.protoCsvWrap #download{margin:0!important}
+.protoFooterNote{font-size:8.7px;line-height:1.45;color:#667085;margin:8px 2px 0}
+
+/* Common non-modal reference window */
+#protoRefWindow{
+  position:absolute;z-index:70;right:12px;top:12px;width:430px;max-width:calc(100% - 24px);
+  max-height:calc(100% - 24px);display:none;flex-direction:column;
+  background:#fff;border:1px solid #98a2b3;border-radius:11px;box-shadow:0 12px 34px rgba(15,23,42,.22);
+  pointer-events:auto;overflow:hidden
+}
+#protoRefWindow.open{display:flex}
+#protoRefWindow.minimized{width:310px;max-height:none}
+#protoRefWindow.minimized .protoRefBody,#protoRefWindow.minimized .protoRefFooter{display:none}
+.protoRefHead{
+  display:flex;align-items:center;gap:7px;padding:8px 9px;background:#111827;color:#fff;
+  cursor:grab;user-select:none;touch-action:none
+}
+.protoRefHead.dragging{cursor:grabbing}
+.protoRefHead button{cursor:pointer!important}
+
+.protoRefTitle{flex:1;min-width:0;font-size:11.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.protoRefDragHandle{display:none!important}
+.protoRefHead button{
+  width:auto!important;margin:0!important;padding:4px 7px!important;border:1px solid #64748b!important;
+  border-radius:5px!important;background:#1f2937!important;color:#fff!important;font-size:9px!important;
+  cursor:pointer!important;touch-action:manipulation
+}
+#protoRefClose{background:#7f1d1d!important;border-color:#b91c1c!important}
+
+.protoRefBody{padding:11px 12px;overflow:auto;font-size:11px;line-height:1.65;color:#344054}
+.protoRefBody h3{font-size:12px;margin:0 0 7px;color:#101828}
+.protoRefBody h4{font-size:10.5px;margin:12px 0 4px;color:#0f5f68}
+.protoRefBody p{margin:4px 0 8px}
+.protoRefBody ul{padding-left:18px;margin:4px 0 9px}
+.protoRefBody .refWarn{padding:7px 8px;border:1px solid #fed7aa;border-radius:7px;background:#fff7ed;color:#9a3412}
+.protoRefBody .refKey{padding:7px 8px;border-left:4px solid #0f766e;background:#f0fdfa;color:#134e4a}
+.protoRefBody .auditBody{font-size:10.5px!important;line-height:1.65!important;padding:0!important;color:#344054!important}
+.protoRefFooter{
+  padding:6px 10px;border-top:1px solid #e4e7ec;background:#f8fafc;
+  font-size:8.7px;line-height:1.4;color:#667085
+}
+.protoHelpBadge{
+  display:inline-block;padding:2px 5px;border-radius:999px;background:#eef4ff;color:#175cd3;
+  font-size:8px;font-weight:800
+}
+
+.protoFontControl{
+  margin:7px 0 10px;padding:7px 8px;border:1px solid #d0d5dd;border-radius:8px;background:#f8fafc
+}
+.protoFontControlTop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.protoFontLabel{font-size:9.5px;font-weight:900;color:#344054}
+.protoFontBtns{display:flex;align-items:center;gap:4px}
+.protoFontBtns button{
+  width:28px!important;height:25px!important;margin:0!important;padding:0!important;
+  font-size:14px!important;font-weight:900!important;border-radius:6px!important
+}
+.protoFontValue{min-width:38px;text-align:center;font-size:9px;font-weight:800;color:#475467}
+.protoFontHint{margin-top:4px;font-size:8.3px;line-height:1.4;color:#667085}
+#side.uiProto{--ui-font-scale:1}
+#side.uiProto .protoCategoryTitle{font-size:calc(12px * var(--ui-font-scale))}
+#side.uiProto .protoCategorySub{font-size:calc(8.8px * var(--ui-font-scale))}
+#side.uiProto .protoSubhead b{font-size:calc(10px * var(--ui-font-scale))}
+#side.uiProto .protoInlineHelp,#side.uiProto .protoHelpBtn,#side.uiProto .protoCollapseBtn{font-size:calc(8.8px * var(--ui-font-scale))!important}
+#side.uiProto .layerGroupTitle,#side.uiProto label,#side.uiProto button,#side.uiProto select,#side.uiProto input,#side.uiProto textarea,
+#side.uiProto .controlHint,#side.uiProto .muted,#side.uiProto .small,#side.uiProto .protoSaveNote,
+#side.uiProto .protoStatusTitle,#side.uiProto .protoStatusMeta,#side.uiProto .protoFooterNote{
+  font-size:calc(10px * var(--ui-font-scale))!important;
+}
+#side.uiProto .viewerIntro{font-size:calc(9.5px * var(--ui-font-scale))!important;line-height:1.5}
+
+
+#protoRefWindow{--ref-font-scale:1}
+.protoRefTools{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:6px 10px;border-bottom:1px solid #e4e7ec;background:#f8fafc
+}
+.protoRefToolsLabel{font-size:9px;font-weight:900;color:#344054}
+.protoRefFontBtns{display:flex;align-items:center;gap:4px}
+.protoRefFontBtns button{
+  width:28px!important;height:24px!important;margin:0!important;padding:0!important;
+  border-radius:6px!important;font-size:14px!important;font-weight:900!important
+}
+.protoRefFontValue{
+  min-width:38px;text-align:center;font-size:9px;font-weight:800;color:#475467
+}
+#protoRefWindow .protoRefTitle{font-size:calc(11.5px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody{font-size:calc(11px * var(--ref-font-scale));line-height:1.65}
+#protoRefWindow .protoRefBody h3{font-size:calc(12px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody h4{font-size:calc(10.5px * var(--ref-font-scale))}
+#protoRefWindow .protoRefBody .auditBody{font-size:calc(10.5px * var(--ref-font-scale))!important}
+#protoRefWindow .protoRefFooter{font-size:calc(8.7px * var(--ref-font-scale))}
+
+@media(max-width:760px){
+  #protoRefWindow{left:8px!important;right:8px!important;top:8px!important;width:auto!important;max-width:none!important;max-height:75%!important}
+}
+
 </style>
 </head>
 <body>
@@ -424,7 +687,7 @@ header{height:72px;padding:8px 14px;background:#111827}
       <div class="legacy">旧「東広島市 交通事故ビューア」／名称変更案・未確定</div>
     </div>
   </div>
-  <div class="viewerBadge"><i></i> Analysis v0.6.31-r1｜Viewer v0.6.30 兄弟版</div>
+  <div class="viewerBadge"><i></i> Analysis v0.6.31-r5 UI操作試作｜Viewer v0.6.30 兄弟版</div>
 </header>
 <div id="app">
 <aside id="side">
@@ -595,7 +858,7 @@ header{height:72px;padding:8px 14px;background:#111827}
 
 <div class="layerBox censusBox">
   <div class="layerGroupTitle">道路交通センサス（R3） <span class="analysisSourceBadge">Analysis</span></div>
-  <label class="layerOption"><input id="trafficCensusLayer" type="checkbox"><span class="layerSymbol" style="color:#0f766e">━</span><span>交通量区間を表示 <span class="layerCount">214基本区間</span></span></label>
+  <label class="layerOption"><input id="trafficCensusLayer" type="checkbox" checked><span class="layerSymbol" style="color:#0f766e">━</span><span>交通量区間を表示 <span class="layerCount">214基本区間</span></span></label>
   <div class="censusSlider"><input id="trafficCensusOpacity" type="range" min="10" max="100" step="5" value="55"><b id="trafficCensusOpacityValue">55%</b></div>
   <div class="censusLegend"><span style="background:#7c8794">&lt;2,500</span><span style="background:#38a9d6">2,500–6,999</span><span style="background:#e5a91a">7,000–13,499</span><span style="background:#d94a32">13,500+</span></div>
   <div class="controlHint">線の太さと色は24時間自動車類交通量（上下合計）を目安にしています。道路線をクリックすると区間属性を確認できます。</div>
@@ -3957,5 +4220,414 @@ syncViewerPolygonUI();
 
 apply();fitData();
 </script>
+
+<script>
+(function(){
+  const side=document.getElementById('side');
+  const map=document.getElementById('map');
+  if(!side||!map)return;
+  side.classList.add('uiProto');
+
+  const intro=side.querySelector('.viewerIntro');
+  if(intro){
+    intro.innerHTML='<b>内部解析・共同検討用 Analysis｜UI再編試作</b><br>機能を「見る → 比べる・調べる → 残す・共有する → データと根拠」で整理しています。使用頻度は各カテゴリ内の並び・開閉に反映します。';
+  }
+
+  function cat(id,title,sub,collapsed=false){
+    const box=document.createElement('section');
+    box.className='protoCategory'+(collapsed?' collapsed':'');
+    box.id=id;
+    box.innerHTML=`<div class="protoCategoryHeader">
+      <div class="protoCategoryHeaderLeft"><div class="protoCategoryTitle">${title}</div><div class="protoCategorySub">${sub}</div></div>
+      <div class="protoCategoryActions">
+        <button class="protoHelpBtn" type="button" data-help="${id}">？</button>
+        <button class="protoCollapseBtn" type="button" aria-expanded="${collapsed?'false':'true'}">${collapsed?'開く':'たたむ'}</button>
+      </div>
+    </div><div class="protoCategoryBody"></div>`;
+    box.querySelector('.protoCollapseBtn').addEventListener('click',e=>{
+      box.classList.toggle('collapsed');
+      const c=box.classList.contains('collapsed');
+      e.currentTarget.textContent=c?'開く':'たたむ';
+      e.currentTarget.setAttribute('aria-expanded',String(!c));
+    });
+    return box;
+  }
+
+  const cView=cat('help_view','① 見る','事故・交通量・参照情報を、まず同じ地図で読む');
+  const cCompare=cat('help_compare','② 比べる・調べる','範囲・年・ID・機序から、問いを掘る');
+  const cSave=cat('help_save','③ 残す・共有する','作業状態を次回へ引き継ぎ、必要な表データを書き出す',true);
+  const cEvidence=cat('help_evidence','④ データと根拠','品質状態は常時確認、詳細は必要時に読む');
+
+  if(intro){
+    const fontCtl=document.createElement('div');
+    fontCtl.className='protoFontControl';
+    fontCtl.innerHTML=`<div class="protoFontControlTop">
+      <div class="protoFontLabel">サイドバー文字サイズ</div>
+      <div class="protoFontBtns">
+        <button type="button" id="protoFontMinus" title="文字を小さく">−</button>
+        <span class="protoFontValue" id="protoFontValue">100%</span>
+        <button type="button" id="protoFontPlus" title="文字を大きく">＋</button>
+      </div>
+    </div>
+    <div class="protoFontHint">地図の縮尺とは別に、左側の説明・操作文字だけを調整します。</div>`;
+    intro.after(fontCtl);
+    fontCtl.after(cView,cCompare,cSave,cEvidence);
+  }else{
+    side.prepend(cEvidence); side.prepend(cSave); side.prepend(cCompare); side.prepend(cView);
+  }
+
+  const bView=cView.querySelector('.protoCategoryBody');
+  const bCompare=cCompare.querySelector('.protoCategoryBody');
+  const bSave=cSave.querySelector('.protoCategoryBody');
+  const bEvidence=cEvidence.querySelector('.protoCategoryBody');
+
+  function move(el,body){ if(el)body.appendChild(el); }
+  function boxByInput(id){const e=document.getElementById(id);return e?e.closest('.layerBox'):null}
+
+  // Hide legacy section headings; preserve all actual controls and listeners.
+  side.querySelectorAll('.sectionHead').forEach(x=>x.style.display='none');
+
+  // ① 見る
+  const modeSegment=document.querySelector('.modeSegment');
+  const modeHidden=document.getElementById('mode');
+  if(modeSegment){
+    const sh=document.createElement('div');
+    sh.className='protoSubhead';
+    sh.innerHTML='<b>表示モード</b><button class="protoInlineHelp" type="button" data-help="feature_mode">？ 使い分け</button>';
+    bView.appendChild(sh); move(modeSegment,bView); move(modeHidden,bView);
+  }
+  move(document.querySelector('.selectionResultGroup'),bView);
+  move(document.querySelector('.mapOpacityGroup'),bView);
+
+  const census=boxByInput('trafficCensusLayer');
+  const admin=boxByInput('adminLayer');
+  const facility=boxByInput('schoolLayer');
+  if(census){
+    const sh=document.createElement('div');sh.className='protoSubhead';
+    sh.innerHTML='<b>交通量を重ねる</b><button class="protoInlineHelp" type="button" data-help="feature_census">？ 交通量</button>';
+    bView.appendChild(sh); move(census,bView);
+  }
+  if(admin||facility){
+    const sh=document.createElement('div');sh.className='protoSubhead';sh.innerHTML='<b>参照情報を重ねる</b>';
+    bView.appendChild(sh); move(admin,bView); move(facility,bView);
+  }
+  const fit=document.getElementById('fit');
+  if(fit){
+    const wrap=document.createElement('div');wrap.style.marginTop='8px';bView.appendChild(wrap);wrap.appendChild(fit);
+  }
+
+  // ② 比べる・調べる
+  const idSearch=document.querySelector('.accidentIdSearch');
+  const yearBlock=document.querySelector('.yearFilterBlock');
+  if(idSearch||yearBlock){
+    const sh=document.createElement('div');sh.className='protoSubhead';sh.innerHTML='<b>場所・記録を探す</b>';
+    bCompare.appendChild(sh);move(idSearch,bCompare);move(yearBlock,bCompare);
+  }
+
+  const area=document.querySelector('.areaBox');
+  if(area){
+    const sh=document.createElement('div');sh.className='protoSubhead';
+    sh.innerHTML='<b>範囲を囲んで比較する</b><button class="protoInlineHelp" type="button" data-help="feature_area">？ 範囲分析</button>';
+    bCompare.appendChild(sh); move(area,bCompare);
+    const rect=document.getElementById('areaRectBtn'),ell=document.getElementById('areaEllipseBtn'),poly=document.getElementById('areaPolygonBtn');
+    if(rect)rect.style.display='none';
+    if(ell)ell.style.display='none';
+    if(poly)poly.textContent='多角形で範囲を囲む';
+    const hint=document.getElementById('areaToolHint');
+    if(hint)hint.textContent='地図上を順にクリックし、3点以上で最初の点を再クリック、または「多角形を確定」で閉じます。範囲は名前を付けて保存し、A〜Dで比較できます。';
+    const areaHints=area.querySelectorAll('.controlHint');
+    if(areaHints[0])areaHints[0].textContent='多角形で地図上の範囲を指定します。保存した多角形は、現在の年フィルタでいつでも再集計できます。';
+    if(areaHints[1])areaHints[1].textContent='保存した多角形を最大4エリアまでA〜Dで地図上に重ね、事故件数や構成を比較できます。';
+    const areaSave=document.getElementById('areaSaveBtn');
+    const areaCsv=document.getElementById('areaSaveCsvBtn');
+    if(areaSave)areaSave.textContent='比較用エリアとして保存';
+    if(areaCsv)areaCsv.textContent='この範囲をCSV';
+    // Keep functionality, but the external area JSON buttons are hidden in the prototype.
+  }
+
+  const mech=boxByInput('mechanismLayer');
+  if(mech){
+    const sh=document.createElement('div');sh.className='protoSubhead';
+    sh.innerHTML='<b>追加の解析</b><button class="protoInlineHelp" type="button" data-help="feature_mechanism">？ 機序再現性</button>';
+    bCompare.appendChild(sh); move(mech,bCompare);
+  }
+  const solar=boxByInput('solarLayer');
+  if(solar)move(solar,bCompare);
+
+  // ③ 残す・共有する
+  const session=document.querySelector('.analysisSession');
+  if(session){
+    const sh=document.createElement('div');sh.className='protoSubhead';
+    sh.innerHTML='<b>作業を次回へ引き継ぐ</b><button class="protoInlineHelp" type="button" data-help="feature_save">？ 保存の違い</button>';
+    bSave.appendChild(sh);move(session,bSave);
+    const title=session.querySelector('.layerGroupTitle');
+    if(title)title.innerHTML='解析セッション <span class="analysisSourceBadge">推奨</span>';
+    const exp=document.getElementById('analysisSessionExport'),imp=document.getElementById('analysisSessionImport');
+    if(exp)exp.textContent='解析セッションを保存';
+    if(imp)imp.textContent='解析セッションを開く';
+    const note=document.createElement('div');note.className='protoSaveNote';
+    note.innerHTML='<b>基本はこちら。</b> 地図位置・縮尺・表示条件・レイヤー・保存エリア・比較状態・解析メモをまとめて1つのJSONにします。';
+    title?.after(note);
+  }
+  const dl=document.getElementById('download');
+  if(dl){
+    const sh=document.createElement('div');sh.className='protoSubhead';sh.innerHTML='<b>表データとして書き出す</b>';
+    bSave.appendChild(sh);
+    const w=document.createElement('div');w.className='protoCsvWrap';bSave.appendChild(w);w.appendChild(dl);
+    dl.textContent='現在表示範囲をCSV書き出し';
+  }
+  const saveFoot=document.createElement('div');saveFoot.className='protoFooterNote';
+  saveFoot.textContent='「解析セッション」は作業を続けるための保存、「CSV」は表計算・外部解析へ渡すための書き出しです。';
+  bSave.appendChild(saveFoot);
+
+  // ④ データと根拠
+  const audit=side.querySelector('details.auditBox');
+  const qualityNote=Array.from(side.children).find(x=>x.classList?.contains('qualityNote'));
+  const warn=Array.from(side.children).find(x=>x.classList?.contains('warn'));
+  if(audit)audit.style.display='none';
+  if(qualityNote)qualityNote.style.display='none';
+  if(warn)warn.style.display='none';
+  const status=document.createElement('div');status.className='protoCompactStatus';
+  status.innerHTML=`<div class="protoStatusMain">
+      <div class="protoStatusTitle"><span class="protoStatusDot"></span>Data Quality Gate v1.1</div>
+      <div class="protoStatusMeta">分析対象 2,262 / 原本 2,263｜1件を地理妥当性確認中として保留</div>
+    </div><button class="protoEvidenceBtn" type="button" data-help="feature_evidence">根拠を見る</button>`;
+  bEvidence.appendChild(status);
+  const evNote=document.createElement('div');evNote.className='protoFooterNote';
+  evNote.textContent='普段は状態だけ確認し、出典・Q1/Q2・交通センサスの扱い・限界は参照ウィンドウで読みます。';
+  bEvidence.appendChild(evNote);
+
+  // Remove/park remaining legacy descriptive blocks from the operational sidebar.
+  side.querySelectorAll('.viewerOnlyNote').forEach(x=>x.style.display='none');
+
+  // Common reference window lives on the map and does not block map operation.
+  const ref=document.createElement('div');ref.id='protoRefWindow';
+  ref.innerHTML=`<div class="protoRefHead" title="黒い上端をドラッグすると移動できます">
+      <div class="protoRefTitle" id="protoRefTitle">参照</div>
+      <button type="button" id="protoRefMin">− 最小化</button>
+      <button type="button" id="protoRefClose">× 閉じる</button>
+    </div>
+    <div class="protoRefTools">
+      <div class="protoRefToolsLabel">ポップアップ文字サイズ</div>
+      <div class="protoRefFontBtns">
+        <button type="button" id="protoRefFontMinus" title="ポップアップ文字を小さく">−</button>
+        <span class="protoRefFontValue" id="protoRefFontValue">100%</span>
+        <button type="button" id="protoRefFontPlus" title="ポップアップ文字を大きく">＋</button>
+      </div>
+    </div>
+    <div class="protoRefBody" id="protoRefBody"></div>
+    <div class="protoRefFooter">黒い上端をドラッグすると移動できます。ボタン・本文上では移動しません。</div>`;
+  map.appendChild(ref);
+
+  const help={
+    help_view:{
+      title:'① 見る｜地図を読むための常用機能',
+      html:`<h3>「見る」は何のため？</h3>
+      <p>事故点だけでなく、交通量や行政・施設情報を同じ地図上に重ね、まず「何が起きているように見えるか」を把握する領域です。</p>
+      <h4>基本の順番</h4><ul><li>個別事故点／集計を選ぶ</li><li>事故類型を必要に応じて絞る</li><li>道路交通センサスを重ねる</li><li>必要な参照レイヤーだけONにする</li><li>背景・交通量の濃さを調整する</li></ul>
+      <div class="refKey"><b>考え方：</b>ここでは答えを出すより、「次にどこを比べたいか」を見つけます。</div>`
+    },
+    help_compare:{
+      title:'② 比べる・調べる｜問いを掘る機能',
+      html:`<h3>「比べる・調べる」は何のため？</h3>
+      <p>場所・年・範囲を指定し、事故構造を比較して仮説や現地確認の問いを作ります。</p>
+      <h4>範囲指定</h4><p>本試作では多角形に一本化しています。実際の道路・街区に沿って必要な範囲だけを囲み、保存した範囲をA〜Dで比較します。</p>
+      <h4>事故ID・実発生年</h4><p>特定記録へ戻る、または時期を限定して環境変化の前後を見るための指定機能です。</p>
+      <div class="refWarn"><b>注意：</b>件数差や構成比だけで原因・危険率を断定しません。交通量、道路改変、現況確認と組み合わせます。</div>`
+    },
+    help_save:{
+      title:'③ 残す・共有する｜保存の判断コストを下げる',
+      html:`<h3>まず「解析セッション」を使います</h3>
+      <p>地図中心・縮尺、表示条件、レイヤー状態、保存エリア、比較状態、解析メモをまとめて保存し、次回その続きを開くためのJSONです。</p>
+      <h4>CSVとの違い</h4><p><b>解析セッション：</b>作業状態を続けるため。<br><b>CSV：</b>表計算、Python/R、外部分析へデータを渡すため。</p>
+      <h4>エリア保存との違い</h4><p>「このエリアを保存」は現在のAnalysis内でA〜D比較するための作業部品です。外部ファイルとして残す場合は解析セッションに含めます。</p>
+      <div class="refKey"><b>迷ったら：</b>「次回続きをしたい」→解析セッション。「表にしたい」→CSV。</div>`
+    },
+    help_evidence:{
+      title:'④ データと根拠｜必要なときにしっかり読む',
+      html:`<h3>根拠は操作頻度ではなく、解析の信頼性を支える基盤です</h3>
+      <p>通常画面では状態だけを表示し、詳しい出典・品質監査・限界は必要時にこの参照窓で確認します。</p>`
+    },
+    feature_mode:{
+      title:'表示モード｜個別事故点と集計',
+      html:`<h3>使い分け</h3><p><b>個別事故点：</b>1件ごとの道路条件・日時・当事者情報を確認します。<br><b>集計：</b>局所的なまとまりと構成比を俯瞰します。</p>
+      <div class="refKey">モードを切り替えても地図中心・縮尺を維持するのが共通UI原則です。</div>`
+    },
+    feature_census:{
+      title:'道路交通センサス（R3）｜交通量を背景として読む',
+      html:`<h3>何のため？</h3><p>事故件数を単独で見るのではなく、道路区間の交通量という背景と同時に読みます。</p>
+      <h4>色</h4><p>灰 → 水色 → 琥珀 → 赤橙の順に24時間自動車類交通量が多くなります。線幅も同じ区分で太くなります。</p>
+      <h4>どう使う？</h4><p>Analysisでは起動時からONです。必要に応じて濃さを調整し、道路線をクリックすると区間属性を確認できます。</p>
+      <div class="refWarn"><b>注意：</b>区間代表値であり、交差点方向別交通量でも、事故発生時点の実交通量でもありません。「事故件数÷交通量」をそのまま危険率にしません。</div>`
+    },
+    feature_area:{
+      title:'範囲分析｜多角形で囲み、保存して比較する',
+      html:`<h3>本試作では多角形だけ</h3><p>矩形・円／楕円は通常画面から外しました。地図上を順にクリックし、最初の点を再クリックするか「確定」で閉じます。</p>
+      <h4>流れ</h4><ul><li>多角形で範囲を囲む</li><li>集計を見る</li><li>必要なら名前とメモを付けて保存</li><li>A〜Dで複数エリアを比較</li></ul>
+      <p>保存エリアは解析セッションJSONにも含まれます。</p>`
+    },
+    feature_mechanism:{
+      title:'事故の「機序再現性」｜記録上の似かたを見る',
+      html:`<h3>何を表示している？</h3><p>事故類型・道路条件・信号／一時停止・昼夜の4条件が一致する最多群を、集計セル内の「一致件数／件数」として示します。</p>
+      <div class="refWarn"><b>注意：</b>実際の衝突過程や原因の同一性を証明する指標ではありません。「似た記録が反復している場所」を見つける入口です。</div>`
+    },
+    feature_save:{
+      title:'保存｜解析セッションとCSVの違い',
+      html:`<h3>解析セッションを保存</h3><p>次回、今の作業状態から再開するための保存です。表示状態・保存エリア・比較・メモをまとめます。</p>
+      <h3>CSV書き出し</h3><p>現在の事故レコードをExcel等へ渡すための表データです。画面状態を復元するものではありません。</p>
+      <div class="refKey"><b>原則：</b>作業を続ける＝セッション。データを渡す＝CSV。</div>`
+    },
+    feature_evidence:{
+      title:'データと根拠｜Data Quality Gate v1.1',
+      html:null
+    }
+  };
+
+  const auditHTML=audit?.querySelector('.auditBody')?.outerHTML||'';
+  const qNote=qualityNote?.outerHTML||'';
+  const warnHTML=warn?.outerHTML||'';
+  help.feature_evidence.html=
+    `<div class="protoHelpBadge">Data Quality Gate v1.1</div>`+
+    (auditHTML||'<p>監査詳細を取得できませんでした。</p>')+
+    (qNote?`<h4>現在の品質状態</h4>${qNote}`:'')+
+    (warnHTML?`<h4>解析上の注意</h4>${warnHTML}`:'');
+
+  const refTitle=document.getElementById('protoRefTitle');
+  const refBody=document.getElementById('protoRefBody');
+  let currentHelpKey=null;
+  function openHelp(key){
+    // Pressing the same "?" again closes the currently displayed help.
+    if(ref.classList.contains('open') && currentHelpKey===key){
+      ref.classList.remove('open','minimized');
+      currentHelpKey=null;
+      return;
+    }
+    const h=help[key]||help.help_view;
+    currentHelpKey=key;
+    refTitle.textContent=h.title;refBody.innerHTML=h.html||'';
+    ref.classList.add('open');ref.classList.remove('minimized');
+    const minBtn=document.getElementById('protoRefMin');
+    if(minBtn)minBtn.textContent='− 最小化';
+  }
+  side.querySelectorAll('[data-help]').forEach(b=>{
+    b.dataset.protoBound='1';
+    b.addEventListener('click',e=>openHelp(e.currentTarget.dataset.help));
+  });
+  document.getElementById('protoRefClose').addEventListener('click',()=>{ref.classList.remove('open','minimized');currentHelpKey=null;});
+  document.getElementById('protoRefMin').addEventListener('click',e=>{
+    ref.classList.toggle('minimized');
+    e.currentTarget.textContent=ref.classList.contains('minimized')?'＋ 展開':'− 最小化';
+  });
+
+  // Reference window interaction:
+  // - all events inside the reference window are isolated from the map
+  // - dragging is allowed only on the black header background/title
+  // - minimize/close buttons never initiate dragging
+  ['pointerdown','pointerup','pointermove','click','dblclick','contextmenu'].forEach(type=>{
+    ref.addEventListener(type,e=>e.stopPropagation());
+  });
+  ref.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});
+  ref.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});
+  ref.addEventListener('touchmove',e=>e.stopPropagation(),{passive:true});
+
+  const refHead=ref.querySelector('.protoRefHead');
+  let drag=false,dx=0,dy=0;
+
+  refHead.addEventListener('pointerdown',e=>{
+    // Buttons are controls, not drag targets.
+    if(e.target.closest('button')) return;
+    drag=true;
+    const rr=ref.getBoundingClientRect();
+    dx=e.clientX-rr.left;dy=e.clientY-rr.top;
+    ref.style.right='auto';ref.style.bottom='auto';
+    refHead.classList.add('dragging');
+    refHead.setPointerCapture(e.pointerId);
+    e.stopPropagation();e.preventDefault();
+  });
+
+  refHead.addEventListener('pointermove',e=>{
+    if(!drag)return;
+    const mr=map.getBoundingClientRect(),rw=ref.offsetWidth,rh=ref.offsetHeight;
+    let x=e.clientX-mr.left-dx,y=e.clientY-mr.top-dy;
+    x=Math.max(4,Math.min(mr.width-rw-4,x));
+    y=Math.max(4,Math.min(mr.height-rh-4,y));
+    ref.style.left=x+'px';ref.style.top=y+'px';
+    e.stopPropagation();e.preventDefault();
+  });
+
+  function endRefDrag(e){
+    if(!drag)return;
+    drag=false;
+    refHead.classList.remove('dragging');
+    try{refHead.releasePointerCapture(e.pointerId)}catch(_){}
+    e.stopPropagation();
+  }
+  refHead.addEventListener('pointerup',endRefDrag);
+  refHead.addEventListener('pointercancel',endRefDrag);
+
+  // Control buttons are deliberately isolated from drag/map events.
+  const minBtn=document.getElementById('protoRefMin');
+  const closeBtn=document.getElementById('protoRefClose');
+  const refFontMinus=document.getElementById('protoRefFontMinus');
+  const refFontPlus=document.getElementById('protoRefFontPlus');
+  [minBtn,closeBtn,refFontMinus,refFontPlus].forEach(btn=>{
+    if(!btn)return;
+    ['pointerdown','pointerup','click'].forEach(type=>btn.addEventListener(type,e=>e.stopPropagation()));
+  });
+
+  // Add help buttons after elements were moved.
+  side.querySelectorAll('[data-help]').forEach(b=>{
+    if(b.dataset.protoBound)return;
+    b.dataset.protoBound='1';
+    b.addEventListener('click',e=>openHelp(e.currentTarget.dataset.help));
+  });
+
+  // Independent reference-popup text-size control.
+  const REF_FONT_KEY='kihai_analysis_ref_font_scale';
+  let refFontScale=Number(localStorage.getItem(REF_FONT_KEY)||'1');
+  if(!Number.isFinite(refFontScale))refFontScale=1;
+  refFontScale=Math.max(.85,Math.min(1.50,refFontScale));
+
+  function applyRefFontScale(){
+    ref.style.setProperty('--ref-font-scale',String(refFontScale));
+    const v=document.getElementById('protoRefFontValue');
+    if(v)v.textContent=Math.round(refFontScale*100)+'%';
+    localStorage.setItem(REF_FONT_KEY,String(refFontScale));
+  }
+  if(refFontMinus)refFontMinus.addEventListener('click',()=>{
+    refFontScale=Math.max(.85,Math.round((refFontScale-.10)*100)/100);
+    applyRefFontScale();
+  });
+  if(refFontPlus)refFontPlus.addEventListener('click',()=>{
+    refFontScale=Math.min(1.50,Math.round((refFontScale+.10)*100)/100);
+    applyRefFontScale();
+  });
+  applyRefFontScale();
+
+  // Independent sidebar text-size control.
+  const FONT_KEY='kihai_analysis_sidebar_font_scale';
+  let fontScale=Number(localStorage.getItem(FONT_KEY)||'1');
+  if(!Number.isFinite(fontScale))fontScale=1;
+  fontScale=Math.max(.85,Math.min(1.35,fontScale));
+
+  function applyFontScale(){
+    side.style.setProperty('--ui-font-scale',String(fontScale));
+    const v=document.getElementById('protoFontValue');
+    if(v)v.textContent=Math.round(fontScale*100)+'%';
+    localStorage.setItem(FONT_KEY,String(fontScale));
+  }
+  const fm=document.getElementById('protoFontMinus');
+  const fp=document.getElementById('protoFontPlus');
+  if(fm)fm.addEventListener('click',()=>{fontScale=Math.max(.85,Math.round((fontScale-.10)*100)/100);applyFontScale();});
+  if(fp)fp.addEventListener('click',()=>{fontScale=Math.min(1.35,Math.round((fontScale+.10)*100)/100);applyFontScale();});
+  applyFontScale();
+
+  // Update status line to make the prototype explicit without changing the data version.
+  const statusLine=document.getElementById('status');
+  if(statusLine)statusLine.textContent=statusLine.textContent.replace('Analysis v0.6.31-r1','Analysis v0.6.31-r5 UI操作試作');
+
+})();
+</script>
+
 </body>
 </html>
